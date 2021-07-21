@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - jupyter-heal/**
-      - .github/workflows/build_heal_jupyter.yml
+      - .github/workflows/build_heal_jupyterlab.yml
   workflow_dispatch:
 
 jobs:
