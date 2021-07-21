@@ -3,20 +3,23 @@ FROM jupyter/r-notebook
 ARG BUILD_DIR=.
 
 USER $NB_USER
+
 WORKDIR /home/$NB_USER
 
 RUN mkdir /home/$NB_USER/tutorial/ /home/$NB_USER/tutorial/data
 
 COPY ${BUILD_DIR}/resources/*.ipynb /home/$NB_USER/tutorial/
+
 ADD ${BUILD_DIR}/resources/data/ /home/$NB_USER/tutorial/data/
 
-COPY ${BUILD_DIR}/resources/requirements.txt /tmp/
 
 RUN mkdir -p $HOME/.jupyter/custom;
 
 COPY ${BUILD_DIR}/resources/custom.js $HOME/.jupyter/custom/
 
 # A bit verbose, but saves some time to break requirements into cache-able steps
+
+RUN conda install -c conda-forge/label/cf202003 -y pyreadstat
 
 RUN conda install -c conda-forge -y matplotlib==3.4.2
 
