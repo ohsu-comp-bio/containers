@@ -12,6 +12,9 @@ ADD ${BUILD_DIR}/resources/data/ /home/$NB_USER/tutorial/data/
 
 COPY ${BUILD_DIR}/resources/requirements.txt /tmp/
 
+RUN mkdir -p /home/$(whoami)/.jupyter/custom;
+RUN echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$(whoami)/.jupyter/custom/custom.js;
+
 # A bit verbose, but saves some time to break requirements into cache-able steps
 
 RUN conda install -c conda-forge -y matplotlib==3.4.2
