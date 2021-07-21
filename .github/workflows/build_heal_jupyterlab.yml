@@ -32,7 +32,7 @@ jobs:
           image: heal-jupyterlab
           tags: ${{ steps.extract_branch.outputs.branch }} ${{ github.sha }}
           dockerfiles: ./jupyter-heal/Dockerfile
-          build-args: [ BUILD_DIR=jupyter-heal ]
+          build-args: BUILD_DIR=jupyter-heal
 
       - name: Push To quay.io
         id: push-to-quay
