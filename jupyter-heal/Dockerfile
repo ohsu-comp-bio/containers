@@ -4,14 +4,17 @@ ARG BUILD_DIR=.
 
 USER $NB_USER
 
-WORKDIR /home/$NB_USER
+WORKDIR ${HOME}
 
-RUN mkdir /home/$NB_USER/tutorial/ /home/$NB_USER/tutorial/data
+RUN mkdir tutorial/ tutorial/data
 
-COPY ${BUILD_DIR}/resources/*.ipynb /home/$NB_USER/tutorial/
+COPY ${BUILD_DIR}/resources/*.ipynb ${HOME}/tutorial/
 
-ADD ${BUILD_DIR}/resources/data/ /home/$NB_USER/tutorial/data/
+ADD ${BUILD_DIR}/resources/data/ ${HOME}/tutorial/data/
 
+COPY ${BUILD_DIR}/README.md .
+
+RUN rm -r work
 
 RUN mkdir -p $HOME/.jupyter/custom;
 
@@ -19,7 +22,7 @@ COPY ${BUILD_DIR}/resources/custom.js $HOME/.jupyter/custom/
 
 # A bit verbose, but saves some time to break requirements into cache-able steps
 
-RUN conda install -c conda-forge/label/cf202003 -y pyreadstat==1.1.0
+RUN conda install -c conda-forge/label/cf202003 -y pyreadstat
 
 RUN conda install -c conda-forge -y matplotlib==3.4.2
 
