@@ -1,4 +1,4 @@
-FROM quay.io/cdis/jupyter-superslim:1.0.1
+FROM quay.io/cdis/jupyter-superslim:1.0.5
 
 USER root
 RUN apt-get update
