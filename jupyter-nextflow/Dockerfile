@@ -50,6 +50,7 @@ USER $NB_UID
 WORKDIR /home/$NB_USER
 
 RUN pip install --upgrade nbconvert
+RUN pip install gen3
 
 COPY --chown=jovyan:users resources/custom.js /home/$NB_USER/.jupyter/custom/
 COPY --chown=jovyan:users resources/jupyter_notebook_config.py /home/$NB_USER/.jupyter/tmp.py
