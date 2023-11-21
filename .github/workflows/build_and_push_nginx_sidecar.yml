@@ -1,0 +1,24 @@
+name: Build Python Images and Push to Quay and ECR
+
+on:
+  push:
+    paths:
+    - nginx-sidecar/*
+    - .github/workflows/build_and_push_nginx_sidecar.yml
+
+jobs:
+  nginx-sidecar:
+    name: nginx-sidecar Build and Push
+    uses: uc-cdis/.github/.github/workflows/image_build_push.yaml@feat/docker-cache-repo
+    with:
+      DOCKERFILE_LOCATION: "./nginx-sidecar/Dockerfile"
+      DOCKERFILE_BUILD_CONTEXT: "./nginx-sidecar"
+      OVERRIDE_REPO_NAME: "nginx-sidecar"
+      OVERRIDE_TAG_NAME: "nginx-sidecar-$(echo ${GITHUB_REF#refs/*/} | tr / _)"
+      # BUILD_PLATFORMS: "linux/amd64"
+      USE_QUAY_ONLY: true
+    secrets:
+      ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
+      ECR_AWS_SECRET_ACCESS_KEY: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+      QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      QUAY_ROBOT_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
